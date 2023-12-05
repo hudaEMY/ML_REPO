@@ -1,11 +1,13 @@
 import csv
 import pandas as pd
 
-file_path = r'D:\CAPESTONE\Nutrisi\NTS.csv'
+file_path = r'D:\Caps\Nutrisi\NTS.csv'
 
+# Inisialisasi DataFrame untuk menyimpan total nutrisi harian
 columns = ['VIt. A', 'Vit. B', 'Vit. C', 'Vit. D', 'Vit. E', 'Vit. K', 'Protein (g)', 'Mineral (%)', 'Energi (Kal)', 'Lemak  (g)', 'Kalsium (mg)', 'Zat Besi (gr)', 'Serat (g)', 'protein (gr)']
 df_total_nutrisi = pd.DataFrame(0, index=[0], columns=columns)
 
+# Lakukan input bahan makanan sebanyak yang diinginkan
 jumlah_masukan = int(input("Masukkan jumlah bahan makanan yang ingin dimasukkan: "))
 for i in range(jumlah_masukan):
     print(f"\nMakanan ke-{i + 1}:")
@@ -28,6 +30,7 @@ for i in range(jumlah_masukan):
     except Exception as e:
         print("Terjadi kesalahan", str(e))
 
+# Tampilkan hasil secara vertikal
 print("\nTotal Nutrisi Harian dari Bahan Makanan yang Dimasukkan:")
 df_total_nutrisi_transposed = df_total_nutrisi.transpose()
 for index, value in df_total_nutrisi_transposed.iterrows():
