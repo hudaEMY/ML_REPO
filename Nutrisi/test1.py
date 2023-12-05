@@ -3,11 +3,9 @@ import pandas as pd
 
 file_path = r'D:\Caps\Nutrisi\NTS.csv'
 
-# Inisialisasi DataFrame untuk menyimpan total nutrisi harian
 columns = ['VIt. A', 'Vit. B', 'Vit. C', 'Vit. D', 'Vit. E', 'Vit. K', 'Protein (g)', 'Mineral (%)', 'Energi (Kal)', 'Lemak  (g)', 'Kalsium (mg)', 'Zat Besi (gr)', 'Serat (g)', 'protein (gr)']
 df_total_nutrisi = pd.DataFrame(0, index=[0], columns=columns)
 
-# Lakukan input bahan makanan sebanyak yang diinginkan
 jumlah_masukan = int(input("Masukkan jumlah bahan makanan yang ingin dimasukkan: "))
 for i in range(jumlah_masukan):
     print(f"\nMakanan ke-{i + 1}:")
