@@ -28,7 +28,6 @@ for i in range(jumlah_masukan):
     except Exception as e:
         print("Terjadi kesalahan", str(e))
 
-# Tampilkan hasil secara vertikal
 print("\nTotal Nutrisi Harian dari Bahan Makanan yang Dimasukkan:")
 df_total_nutrisi_transposed = df_total_nutrisi.transpose()
 for index, value in df_total_nutrisi_transposed.iterrows():
