@@ -18,7 +18,7 @@ with open(file_path_input, 'r') as file:
 random_entries = []
 
 for _ in range(10000):
-    jenis_kelamin = random.choice(["Laki-laki"])
+    jenis_kelamin = random.choice(["Laki-laki", "Perempuan"])
     umur_bulan = random.randint(0, 36)
     berat = round(random.uniform(0, 100), 2)
     panjang = round(random.uniform(0, 100), 2)
