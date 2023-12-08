@@ -1,34 +1,34 @@
-import csv
+import tensorflow as tf
 import pandas as pd
 
-file_path = r'D:\Caps\Nutrisi\NTS.csv'
+def hitung_total_nutrisi():
+    file_path = 'nutrisi_fix.csv'  # Ganti dengan path file CSV Anda
 
-columns = ['VIt. A', 'Vit. B', 'Vit. C', 'Vit. D', 'Vit. E', 'Vit. K', 'Protein (g)', 'Mineral (%)', 'Energi (Kal)', 'Lemak  (g)', 'Kalsium (mg)', 'Zat Besi (gr)', 'Serat (g)', 'protein (gr)']
-df_total_nutrisi = pd.DataFrame(0, index=[0], columns=columns)
+    # Membuat DataFrame untuk menyimpan total nutrisi
+    df_total_nutrisi = None
 
-jumlah_masukan = int(input("Masukkan jumlah bahan makanan yang ingin dimasukkan: "))
-for i in range(jumlah_masukan):
-    print(f"\nMakanan ke-{i + 1}:")
-    bahan_makanan_input = input("Masukkan nama bahan makanan: ")
-    try:
-        with open(file_path, 'r', encoding='utf-8') as file:
-            csv_reader = csv.DictReader(file)
-            found = False
-            for row in csv_reader:
-                if row['Bahan Makan'].lower() == bahan_makanan_input.lower():
-                    found = True
-                    df_input = pd.DataFrame([row])
-                    df_input = df_input.apply(pd.to_numeric, errors='coerce').fillna(0)
-                    df_total_nutrisi += df_input
-                    break
-            if not found:
-                print(f"Bahan baku '{bahan_makanan_input}' tidak ditemukan dalam dataset nutrisi.")
-    except FileNotFoundError:
-        print("File not found.")
-    except Exception as e:
-        print("Terjadi kesalahan", str(e))
+    jumlah_masukan = int(input("Masukkan jumlah bahan makanan yang ingin dimasukkan: "))
+    for i in range(jumlah_masukan):
+        print(f"\nMakanan ke-{i + 1}:")
+        bahan_makanan_input = input("Masukkan nama bahan makanan: ")
 
-print("\nTotal Nutrisi Harian dari Bahan Makanan yang Dimasukkan:")
-df_total_nutrisi_transposed = df_total_nutrisi.transpose()
-for index, value in df_total_nutrisi_transposed.iterrows():
-    print(f"{index} = {value[0]}")
+        # Membaca file CSV dengan TensorFlow
+        record_defaults = [tf.string] + [tf.float32]*18  # Sesuaikan dengan jumlah kolom Anda
+        dataset = tf.data.experimental.CsvDataset(file_path, record_defaults=record_defaults, header=True)
+
+        # Mencari bahan makanan dalam dataset
+        found = False
+        for row in dataset:
+            if row[0].numpy().decode('utf-8').lower() == bahan_makanan_input.lower():
+                found = True
+                if df_total_nutrisi is None:
+                    df_total_nutrisi = pd.DataFrame([row[1:].numpy()], columns=row[0].numpy())
+                else:
+                    df_total_nutrisi += pd.DataFrame([row[1:].numpy()], columns=row[0].numpy())
+                break
+
+    return df_total_nutrisi
+
+df_total_nutrisi = hitung_total_nutrisi()
+print("\nTotal Nutrisi:")
+print(df_total_nutrisi)
