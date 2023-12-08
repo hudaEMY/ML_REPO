@@ -8,16 +8,16 @@ def is_stunted(berat, panjang, kepala, data_berat, data_panjang, data_kepala):
         kepala < data_kepala[0] or kepala > data_kepala[1]
     )
 
-file_path_input = r'D:\CAPESTONE\Stunting\bersih.csv'
+file_path_input = r'D:\CAPESTONE\Stunting\dataset.csv'
 file_path_output = r'D:\CAPESTONE\Stunting\data_train.csv'
 
 random_entries = []
-for _ in range(1000000):
+for _ in range(10000):
     jenis_kelamin = random.choice(["Laki-laki", "Perempuan"])
-    umur_bulan = random.randint(0, 24)
-    berat = round(random.uniform(2.0, 8.0), 2)
-    panjang = round(random.uniform(30.0, 70.0), 2)
-    lingkar_kepala = round(random.uniform(20.0, 50.0), 2)
+    umur_bulan = random.randint(0, 36)
+    berat = round(random.uniform(0, 100), 2)
+    panjang = round(random.uniform(0, 100), 2)
+    lingkar_kepala = round(random.uniform(0, 100), 2)
 
     with open(file_path_input, 'r') as file:
         csvreader = csv.DictReader(file)
